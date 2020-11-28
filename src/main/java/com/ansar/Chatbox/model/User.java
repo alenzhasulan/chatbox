@@ -3,7 +3,6 @@ package com.ansar.Chatbox.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sun.istack.Nullable;
-import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -14,7 +13,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "users")
-@Data
+
 public class User extends BaseEntity{
 
     @Id
@@ -52,6 +51,9 @@ public class User extends BaseEntity{
     @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Set<Chat> chats;
+
+    public User() {
+    }
 
 
     public Set<Chat> getChats() {

@@ -1,14 +1,15 @@
 package com.ansar.Chatbox.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.Data;
+
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "roles")
-@Data
+
 public class  Role extends BaseEntity {
     @Column(name = "name")
     private String name;
@@ -16,6 +17,9 @@ public class  Role extends BaseEntity {
     @ManyToMany(mappedBy = "roles",fetch = FetchType.LAZY)
     @JsonBackReference
     private List<User> users;
+
+    public Role() {
+    }
 
     public String getName() {
         return name;
@@ -39,4 +43,16 @@ public class  Role extends BaseEntity {
                 "name: " + name + "}";
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Role role = (Role) o;
+        return name.equals(role.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
 }
