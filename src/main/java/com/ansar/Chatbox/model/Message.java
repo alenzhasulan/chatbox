@@ -1,14 +1,21 @@
 package com.ansar.Chatbox.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Entity
 @Table(name="messages")
 
 public class Message extends BaseEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private Integer step;
 
@@ -22,16 +29,38 @@ public class Message extends BaseEntity {
     @JsonIgnore
     private Card card;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "text_id", referencedColumnName = "id")
+    private Text text;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "image_id", referencedColumnName = "id")
+    private Image image;
+
 
     public Message() {
 
     }
 
-    public Message(Integer step, MessageType messageType, ContentType contentType) {
+    public Message(Long id, Integer step, MessageType messageType, ContentType contentType, Card card, Text text, Image image) {
+        this.id = id;
         this.step = step;
         this.messageType = messageType;
         this.contentType = contentType;
+        this.card = card;
+        this.text = text;
+        this.image = image;
     }
+
+
+    public Text getText() {
+        return text;
+    }
+
+    public void setText(Text text) {
+        this.text = text;
+    }
+
 
     public Integer getStep() {
         return step;
@@ -87,5 +116,23 @@ public class Message extends BaseEntity {
     @Override
     public int hashCode() {
         return Objects.hash(step, messageType, contentType);
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
+    }
+
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(Long id) {
+        this.id = id;
     }
 }

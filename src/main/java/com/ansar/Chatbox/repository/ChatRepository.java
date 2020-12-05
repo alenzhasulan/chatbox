@@ -9,8 +9,8 @@ import java.util.Optional;
 
 
 public interface ChatRepository extends CrudRepository<Chat,Long> {
+    Optional<Chat>  findById(Long id);
     List<Chat> findAllByUser(User user);
     Optional<Chat>  findAllByUserAndId(User user, Long id);
-
 
 }

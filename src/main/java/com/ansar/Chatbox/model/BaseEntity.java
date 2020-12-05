@@ -15,6 +15,7 @@ public class BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonIgnore
     @CreatedDate
     @Column(name="created")
     private Date created;

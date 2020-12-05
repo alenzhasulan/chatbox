@@ -2,14 +2,13 @@ package com.ansar.Chatbox.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "chats")
@@ -22,13 +21,15 @@ public class Chat extends BaseEntity {
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id",updatable = false)
     @JsonIgnore
     private User user;
 
 
-    @OneToMany(mappedBy = "chat", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "chat", cascade = CascadeType.ALL,orphanRemoval = true)
+//    @Fetch(FetchMode.SELECT)
     private List<Card> cards=new ArrayList<Card>();
+
 
     public Chat() {
     }
@@ -60,7 +61,11 @@ public class Chat extends BaseEntity {
     }
 
     public void setCards(List<Card> cards) {
-        this.cards = cards;
+            this.cards.clear();
+            if(cards!=null){
+                this.cards.addAll(cards);
+            }
+//        this.cards = cards;
     }
 
     @Override

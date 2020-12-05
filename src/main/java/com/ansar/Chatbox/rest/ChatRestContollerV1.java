@@ -37,9 +37,9 @@ public class ChatRestContollerV1 {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Chat> getById ( @PathVariable Long id){
-        Chat chats=chatService.findById(id);
-        return ResponseEntity.ok(chats);
+    public ResponseEntity<ChatDto> getById ( @PathVariable Long id){
+        ChatDto chatDto=chatService.findById(id);
+        return ResponseEntity.ok(chatDto);
     }
 
     @PostMapping("/add")
@@ -54,5 +54,11 @@ public class ChatRestContollerV1 {
         String chatName=chatDto.getName();
         Chat chat=chatService.update(id,chatName);
         return ResponseEntity.ok(chat);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<ChatDto> updateAll (@PathVariable("id") long id,@Valid @RequestBody ChatDto chatDto){
+        ChatDto result=chatService.updateAll(chatDto);
+        return ResponseEntity.ok(result);
     }
 }

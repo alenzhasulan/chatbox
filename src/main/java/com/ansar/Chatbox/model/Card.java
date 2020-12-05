@@ -22,7 +22,7 @@ public class Card extends BaseEntity{
     @JsonIgnore
     private Chat chat;
 
-    @OneToMany(mappedBy = "card", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "card", cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Message> messages=new ArrayList<Message>();
 
     public Card() {
