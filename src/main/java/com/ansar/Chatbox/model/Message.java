@@ -1,11 +1,11 @@
 package com.ansar.Chatbox.model;
 
+import com.ansar.Chatbox.dto.ButtonDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -38,11 +38,15 @@ public class Message extends BaseEntity {
     private Image image;
 
 
+    @OneToMany(mappedBy = "message", cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<ButtonContent> buttons=new ArrayList<ButtonContent>();
+
+
     public Message() {
 
     }
 
-    public Message(Long id, Integer step, MessageType messageType, ContentType contentType, Card card, Text text, Image image) {
+    public Message(Long id, Integer step, MessageType messageType, ContentType contentType, Card card, Text text, Image image, List<ButtonContent> buttons) {
         this.id = id;
         this.step = step;
         this.messageType = messageType;
@@ -50,6 +54,7 @@ public class Message extends BaseEntity {
         this.card = card;
         this.text = text;
         this.image = image;
+        this.buttons = buttons;
     }
 
 
@@ -134,5 +139,14 @@ public class Message extends BaseEntity {
     @Override
     public void setId(Long id) {
         this.id = id;
+    }
+
+
+    public List<ButtonContent> getButtons() {
+        return buttons;
+    }
+
+    public void setButtons(List<ButtonContent> buttons) {
+        this.buttons = buttons;
     }
 }

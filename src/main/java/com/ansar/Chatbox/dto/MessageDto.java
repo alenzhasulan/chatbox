@@ -3,6 +3,9 @@ package com.ansar.Chatbox.dto;
 import com.ansar.Chatbox.model.ContentType;
 import com.ansar.Chatbox.model.MessageType;
 
+import java.util.List;
+import java.util.Set;
+
 public class MessageDto {
     private Long id;
 
@@ -18,7 +21,13 @@ public class MessageDto {
 
     private Long child_id;
 
-    public MessageDto(Long id, Integer step, String type_message, String type_content, String data, String url, Long child_id) {
+    private List<ButtonDto> contentButton;
+
+    public MessageDto(){
+
+    }
+
+    public MessageDto(Long id, Integer step, String type_message, String type_content, String data, String url, Long child_id, List<ButtonDto> contentButton) {
         this.id = id;
         this.step = step;
         this.type_message = type_message;
@@ -26,6 +35,7 @@ public class MessageDto {
         this.data = data;
         this.url = url;
         this.child_id = child_id;
+        this.contentButton = contentButton;
     }
 
 
@@ -93,5 +103,13 @@ public class MessageDto {
 
     public void setChild_id(Long child_id) {
         this.child_id = child_id;
+    }
+
+    public List<ButtonDto> getContentButton() {
+        return contentButton;
+    }
+
+    public void setContentButton(List<ButtonDto> contentButton) {
+        this.contentButton = contentButton;
     }
 }

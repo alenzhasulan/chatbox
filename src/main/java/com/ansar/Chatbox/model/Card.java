@@ -17,6 +17,9 @@ public class Card extends BaseEntity{
 
     private Integer step;
 
+    private Float position_x;
+    private Float position_y;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "chat_id")
     @JsonIgnore
@@ -28,12 +31,15 @@ public class Card extends BaseEntity{
     public Card() {
     }
 
-    public Card(Long id, Integer step, Chat chat, List<Message> messages) {
+    public Card(Long id, Integer step, Float position_x, Float position_y, Chat chat, List<Message> messages) {
         this.id = id;
         this.step = step;
+        this.position_x = position_x;
+        this.position_y = position_y;
         this.chat = chat;
         this.messages = messages;
     }
+
 
     public Integer getStep() {
         return step;
@@ -90,5 +96,21 @@ public class Card extends BaseEntity{
                 ", step=" + step +
                 ", chat=" + chat +
                 '}';
+    }
+
+    public Float getPosition_x() {
+        return position_x;
+    }
+
+    public void setPosition_x(Float position_x) {
+        this.position_x = position_x;
+    }
+
+    public Float getPosition_y() {
+        return position_y;
+    }
+
+    public void setPosition_y(Float position_y) {
+        this.position_y = position_y;
     }
 }

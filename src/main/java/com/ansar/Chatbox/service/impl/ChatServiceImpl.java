@@ -99,29 +99,26 @@ public class ChatServiceImpl implements ChatService {
                 .orElseThrow(()-> new ResourceNotFoundException("Not found chat with id = "+chatDto.getId()));
 
         List<Card> newCards = new ArrayList<>();
-
         chatDto.getCards().forEach(cardDto -> {
             Card card=cardMapper.toEntity(cardDto);
             card.setChat(parentChat);
 
-//            List<Message> newMessages = new ArrayList<>();
-//            cardDto.getMessages().forEach(messageDto -> {
-//                Message message=messageMapper.toEntity(messageDto);
-//                message.setCard(card);
-//                newMessages.add(message);
-//            });
-//
-//            card.getMessages().clear();
-//            card.setMessages(newMessages);
+            List<Message> newMessages = new ArrayList<>();
+            cardDto.getMessages().forEach(messageDto -> {
+                Message message=messageMapper.toEntity(messageDto);
+                message.setCard(card);
+                newMessages.add(message);
+            });
+            card.getMessages().clear();
+            card.setMessages(newMessages);
 
             newCards.add(card);
         });
+
         parentChat.getCards().clear();
         parentChat.setCards(newCards);
 
-
         chatRepository.save(parentChat);
-
         return chatMapper.toDto(parentChat);
     }
 

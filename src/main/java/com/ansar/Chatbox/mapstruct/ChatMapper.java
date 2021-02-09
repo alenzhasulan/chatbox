@@ -20,25 +20,17 @@ public abstract class ChatMapper {
     public  abstract ChatDto toDto (Chat chat);
 
 
-    @Mapping(target="id", source="chatDto.id")
+//    @Mapping(target="id", source="chatDto.id")
     @Mapping(target="name", source="chatDto.name")
     @Mapping(target ="cards",source = "chatDto.cards")
 
     public  abstract Chat toEntity (ChatDto chatDto);
 
-//    @AfterMapping
-//    public void after(ChatDto chatDto, @MappingTarget Chat chat) {
-//        System.out.println("Begin chat");
-//        if(chatDto.getCards().size()!=0){
-//            Chat parent=chatRepository.findById(chatDto.getId())
-//                    .orElseThrow(()-> new ResourceNotFoundException("Not found chat with id = " ));
-//            System.out.println(parent);
-//            chat.getCards().forEach(card -> {
-//                card.setChat(parent);
-//            });
-//            System.out.println(chat);
-//            System.out.println("bir");
-//        }
-//    }
+    @AfterMapping
+    public void after(ChatDto chatDto, @MappingTarget Chat chat) {
+        if(chatDto.getId()!=0){
+            chat.setId(chatDto.getId());
+        }
+    }
 
 }

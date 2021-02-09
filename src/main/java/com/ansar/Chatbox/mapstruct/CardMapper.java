@@ -2,6 +2,7 @@ package com.ansar.Chatbox.mapstruct;
 
 import com.ansar.Chatbox.dto.CardDto;
 import com.ansar.Chatbox.dto.ChatDto;
+import com.ansar.Chatbox.dto.PositionDto;
 import com.ansar.Chatbox.exception.ResourceNotFoundException;
 import com.ansar.Chatbox.model.Card;
 import com.ansar.Chatbox.repository.CardRepository;
@@ -18,7 +19,7 @@ import java.util.List;
         componentModel = "spring",
         uses = {
                 ChatMapper.class,
-//                MessageMapper.class
+                MessageMapper.class
         },
         unmappedTargetPolicy = org.mapstruct.ReportingPolicy.IGNORE,
         collectionMappingStrategy = CollectionMappingStrategy.ADDER_PREFERRED,
@@ -34,29 +35,28 @@ public abstract  class CardMapper {
 
     @Mapping(target="id", source="card.id")
     @Mapping(target="step", source="card.step")
-//    @Mapping(target="messages", source="card.messages")
+    @Mapping(target="messages", source="card.messages")
     public  abstract CardDto toDto(Card card);
     public  abstract List<CardDto> toDto(List<CardDto> card);
 
 
     @Mapping(target="id", source="cardDto.id")
     @Mapping(target="step", source="cardDto.step")
-//    @Mapping(target="messages", source="cardDto.messages")
+    @Mapping(target="messages", source="cardDto.messages")
     @Mapping(target="chat",ignore = true)
+    @Mapping(target="position_x", source="cardDto.position.x")
+    @Mapping(target="position_y", source="cardDto.position.y")
     public  abstract Card  toEntity(CardDto cardDto);
     public  abstract List<Card> toEntity(List<Card> card);
 
 
-//    @AfterMapping
-//    public void calledWithSourceAndTarget(CardDto cardDto, @MappingTarget Card card) {
-//        System.out.println("OSISIISIISIISI");
-//        System.out.println(chatDto);
-//        Card result = this.cardRepository.findById(cardDto.getId())
-////                .orElseGet(()->new Card());
-//                .orElseThrow(()-> new ResourceNotFoundException("Not found chat with id = " ));
-//        System.out.println(result);
-//        card.setChat(result.getChat());
-//    }
+    @AfterMapping
+    public void after(@MappingTarget CardDto cardDto,  Card card) {
+        PositionDto positionDto=new PositionDto();
+        positionDto.setX(card.getPosition_x());
+        positionDto.setY(card.getPosition_y());
+        cardDto.setPosition(positionDto);
+    }
 
 
 

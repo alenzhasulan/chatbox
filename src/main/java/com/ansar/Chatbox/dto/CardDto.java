@@ -9,16 +9,18 @@ import java.util.List;
 public class CardDto {
     private Long id;
     private Integer step;
-//    private List<MessageDto> messages;
+    private List<MessageDto> messages;
+    private PositionDto position;
 
     public CardDto() {
 
     }
 
-    public CardDto(Long id, Integer step, List<MessageDto> messages) {
+    public CardDto(Long id, Integer step, List<MessageDto> messages, PositionDto position) {
         this.id = id;
         this.step = step;
-//        this.messages = messages;
+        this.messages = messages;
+        this.position = position;
     }
 
 
@@ -46,11 +48,21 @@ public class CardDto {
                 '}';
     }
 
-//    public List<MessageDto> getMessages() {
-//        return messages;
-//    }
-//
-//    public void setMessages(List<MessageDto> messages) {
-//        this.messages = messages;
-//    }
+    public List<MessageDto> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(List<MessageDto> messages) {
+        this.messages = messages;
+    }
+
+    public PositionDto getPosition() {
+        return position;
+    }
+
+    public void setPosition(PositionDto position) {
+        this.position = position;
+    }
 }
+
+
